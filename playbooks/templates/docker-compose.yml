@@ -4,6 +4,8 @@ services:
     build:
       context: app
       dockerfile: Dockerfile.prod
+    environment:
+      VERSION: {{ version }}
     restart: always
   nginx:
     image: nginx:1.11.3
