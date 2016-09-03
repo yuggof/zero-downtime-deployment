@@ -1,0 +1,15 @@
+FROM ruby:2.3.1
+
+RUN adduser --disabled-password --gecos '' sinatra
+WORKDIR /home/sinatra/app
+
+COPY Gemfile Gemfile
+COPY Gemfile.lock Gemfile.lock
+RUN bundle
+
+COPY . .
+RUN chown -R sinatra:sinatra .
+
+USER sinatra
+
+CMD ["ruby", "run.rb"]
