@@ -6,4 +6,4 @@
     - docker-compose.yml
     - nginx.conf
 
-- synchronize: src=app dest=deploy
+- synchronize: src=app dest=deploy # Very ugly line, don't do it on production. It's better to pull an image from registry.
