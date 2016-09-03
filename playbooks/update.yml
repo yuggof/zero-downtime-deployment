@@ -1,0 +1,22 @@
+---
+- hosts: all
+  tasks:
+    - shell: docker ps --filter 'name=app_sinatra' --format {% raw %} '{{ .Names }}' {% endraw %} | sed -r 's/app_sinatra(0|1)_1/\1/'
+      register: old_bit
+
+    - set_fact: old_bit={{ old_bit.stdout }}
+    - set_fact: bit={{ (old_bit | int + 1) % 2 }}
+
+    - include: tasks/download_files.yml
+
+    - shell: docker-compose -p app up --build -d
+      args:
+        chdir: ~/deploy
+
+    - include: tasks/reload_nginx.yml
+
+    - shell: docker stop -t 60 app_sinatra{{ old_bit }}_1
+
+    - shell: docker rm app_sinatra{{ old_bit }}_1
+
+    - file: path=~/deploy state=absent
