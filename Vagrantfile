@@ -75,6 +75,7 @@ Vagrant.configure(2) do |config|
   # SHELL
   config.vm.provision :shell, inline: <<-SHELL
     curl -sSL https://get.docker.com/ | sh
+    sudo usermod -aG docker vagrant
     sudo apt-get install -y python-pip
     sudo pip install docker-compose
   SHELL
