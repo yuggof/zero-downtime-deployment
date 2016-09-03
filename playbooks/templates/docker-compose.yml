@@ -1,0 +1,12 @@
+version: '2'
+services:
+  sinatra{{ bit }}:
+    build:
+      context: app
+      dockerfile: Dockerfile.prod
+    restart: always
+  nginx:
+    image: nginx:1.11.3
+    restart: always
+    ports:
+      - 80:80
