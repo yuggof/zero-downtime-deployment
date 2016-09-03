@@ -1,0 +1,4 @@
+---
+- shell: docker cp ~/deploy/nginx.conf app_nginx_1:/etc/nginx/nginx.conf
+
+- shell: docker exec app_nginx_1 nginx -s reload

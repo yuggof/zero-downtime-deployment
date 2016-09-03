@@ -1,0 +1,14 @@
+---
+- hosts: all
+  vars:
+    bit: 0
+  tasks:
+    - include: tasks/download_files.yml
+
+    - shell: docker-compose -p app up --build -d
+      args:
+        chdir: ~/deploy
+
+    - include: tasks/reload_nginx.yml
+
+    - file: path=~/deploy state=absent

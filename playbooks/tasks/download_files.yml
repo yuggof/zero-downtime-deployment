@@ -1,0 +1,9 @@
+---
+- file: path=~/deploy state=directory
+
+- template: src=templates/{{ item }} dest=~/deploy/{{ item }}
+  with_items:
+    - docker-compose.yml
+    - nginx.conf
+
+- synchronize: src=app dest=deploy
